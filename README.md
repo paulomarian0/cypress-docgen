@@ -48,7 +48,7 @@ npm run start
 npm run generate:doc
 ```
 
-When running any of these commands, the tool will recursively scan your entire project directory and process all `.cy.js`, `.cy.ts`, `.spec.js`, `.spec.ts`, `test.ts`, and `test.ts` files to generate the documentation.
+When running any of these commands, the tool will recursively scan your entire project directory and process all `.cy.js`, `.cy.ts`, `.spec.js`, `.spec.ts`, `.test.js`, and `.test.ts` files to generate the documentation.
 
 ## Metadata Support
 
@@ -75,15 +75,14 @@ The tool generates a `spec-docs.md` file with the following information:
 - Total number of test files
 - Count of Cypress (.cy) files
 - Count of Spec (.spec) files
+- Count of Test (.test) files
 
 ### For Each Test File
 
 - File name and path relative to the project root
 - Description and author (if provided in JSDoc comments)
-- File type (cypress or spec)
-- URL being tested in the test
-- Describe blocks
-- Context blocks
+- Describe blocks (when present)
+- Context blocks (when present)
 - All test cases (it blocks)
 
 ## Configuration
