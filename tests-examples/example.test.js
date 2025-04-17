@@ -2,7 +2,7 @@
 
 /**
  * @description Tests for the contact form functionality
- * @author Cypress-DocGen
+ * @author John Doe
  */
 context('Contact Form', () => {
   describe('Message Submission', () => {

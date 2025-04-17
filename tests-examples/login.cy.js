@@ -2,7 +2,7 @@
 
 /**
  * @description Tests for the authentication functionality
- * @author Cypress-DocGen
+ * @author John Pork
  */
 context('Authentication', () => {
     it('should allow login with correct username and password', () => {

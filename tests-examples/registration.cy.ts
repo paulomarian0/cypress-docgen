@@ -2,7 +2,7 @@
 
 /**
  * @description Tests for user registration functionality
- * @author Cypress-DocGen
+ * @author Paulo Mariano
  */
 context('User Registration', () => {
   describe('Registration Form', () => {

@@ -27,6 +27,9 @@
 
 **Path:** tests-examples\example.test.js
 
+**Description:** Tests for the contact form functionality
+**Author:** John Doe
+
 ## Describe: **Message Submission**
 
 ### Context: **Contact Form**
@@ -54,6 +57,9 @@
 ## File: **login.cy.js**
 
 **Path:** tests-examples\login.cy.js
+
+**Description:** Tests for the authentication functionality
+**Author:** John Pork
 
 ### Context: **Authentication**
 
@@ -94,6 +100,9 @@
 
 **Path:** tests-examples\products.spec.js
 
+**Description:** Tests for product search and advanced filtering
+**Author:** Josue Lobo
+
 ## Describe: **Search Functionality**
 
 ### Context: **Product Search**
@@ -108,6 +117,9 @@
 ## File: **registration.cy.ts**
 
 **Path:** tests-examples\registration.cy.ts
+
+**Description:** Tests for user registration functionality
+**Author:** Paulo Mariano
 
 ## Describe: **Registration Form**
 

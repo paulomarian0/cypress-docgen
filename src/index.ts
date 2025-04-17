@@ -65,7 +65,7 @@ testFiles.forEach(filePath => {
   
   // Include metadata if available
   if (result.description) {
-    markdown += `**Description:** ${result.description}\n\n`;
+    markdown += `**Description:** ${result.description}\n`;
   }
   
   if (result.author) {

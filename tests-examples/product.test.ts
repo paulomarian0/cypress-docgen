@@ -1,9 +1,6 @@
 /// <reference types="cypress" />
 
-/**
- * @description Tests for product catalog and details
- * @author Cypress-DocGen
- */
+
 context('Product Catalog', () => {
   describe('Product Listing', () => {
     beforeEach(() => {

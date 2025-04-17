@@ -2,10 +2,6 @@
 
 const { describe } = require("node:test");
 
-/**
- * @description Tests for the authentication functionality
- * @author Cypress-DocGen
- */
 describe('Authentication', () => {
     it('should allow login with correct username and password', () => {
       // Navigate to login page

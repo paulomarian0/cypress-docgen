@@ -1,10 +1,6 @@
 /// <reference types="cypress" />
 import 'cypress-file-upload';
 
-/**
- * @description Tests for the file upload functionality
- * @author Cypress-DocGen
- */
 context('File Upload', () => {
   describe('Document Upload', () => {
     beforeEach(() => {

@@ -2,7 +2,7 @@
 
 /**
  * @description Tests for product search and advanced filtering
- * @author Cypress-DocGen
+ * @author Josue Lobo
  */
 context('Product Search', () => {
     describe('Search Functionality', () => {

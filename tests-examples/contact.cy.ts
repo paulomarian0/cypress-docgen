@@ -1,9 +1,5 @@
 /// <reference types="cypress" />
 
-/**
- * @description Tests for the contact form functionality
- * @author Cypress-DocGen
- */
 context('Contact Form', () => {
   describe('Message Submission', () => {
     it('should send message with all fields filled correctly', () => {
