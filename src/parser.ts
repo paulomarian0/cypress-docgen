@@ -5,6 +5,7 @@ import { IParsedTestFile } from './types';
 export function parseCypressTestFile(filePath: string): IParsedTestFile {
   const content = fs.readFileSync(filePath, 'utf8');
   const fileName = path.basename(filePath);
+  const relativePath = path.relative(process.cwd(), filePath);
 
   const describeMatch = content.match(/describe\(['"`](.*?)['"`],/);
   const contextMatch = content.match(/context\(['"`](.*?)['"`],/g);
@@ -22,6 +23,7 @@ export function parseCypressTestFile(filePath: string): IParsedTestFile {
 
   return {
     fileName,
+    filePath: relativePath,
     describe,
     url,
     context,

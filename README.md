@@ -46,7 +46,17 @@ npm run start
 npm run generate:doc
 ```
 
-When running any of these commands, the tool will automatically scan and process all `.cy.js`, `.cy.ts`, `.spec.js`, and `.spec.ts` files located in the `/tests` directory to generate the documentation.
+When running any of these commands, the tool will recursively scan your entire project directory and process all `.cy.js`, `.cy.ts`, `.spec.js`, and `.spec.ts` files to generate the documentation. The generated document includes the relative path of each test file for better reference.
+
+## Output
+
+The tool generates a `spec-docs.md` file with the following information for each test file:
+
+- File name
+- File path relative to the project root
+- Describe blocks
+- Context blocks
+- All test cases (it blocks)
 
 ## Configuration
 
