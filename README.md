@@ -9,7 +9,7 @@ Cypress-DocGen extracts documentation from your Cypress test files and generates
 ## Features
 
 - Parses Cypress test files to extract documentation
-- Supports both `.cy` and `.spec` file formats
+- Supports both `.cy`, `.spec` and `.test` file formats
 - Extracts test metadata from JSDoc-style comments
 - Generates structured documentation in markdown format
 - Groups test files by type for better organization
