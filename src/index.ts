@@ -13,10 +13,9 @@ files.forEach(file => {
   const result = parseCypressTestFile(filePath);
 
   markdown += `## File: **${result.fileName}**\n\n`;
-  markdown += `### Describe\n**${result.describe}**\n\n`;
-  markdown += `### URL Visit\n\`${result.url}\`\n\n`;
-  markdown += `### Context\n**${result.context}**\n\n`;
-  markdown += `### Tests\n`;
+  markdown += `## Describe: **${result.describe}**\n\n`;
+  markdown += `### Context: **${result.context}**\n\n`;
+  markdown += `#### Tests\n`;
 
   result.its.forEach(it => {
     markdown += `- ${it}\n`;
