@@ -1,45 +1,67 @@
-# Cypress Test Documentation
+# Cypress-DocGen
 
-## File: **sso-employee.cy.js**
+A tool designed to automatically generate documentation from Cypress tests.
 
-## Describe: **SSO Employee**
+## Overview
 
-### Context: **Sign Up**
+Cypress-DocGen extracts documentation from your Cypress test files and generates structured documentation. This helps maintain up-to-date documentation that's always in sync with your actual tests.
 
-#### Tests
-- Sign up with Employee ID
-- Sign up through Ping One
-- Validate signup information matches the personal information form
-- Validate if the employee is able to update his personal details
-- Validate if the error messages are getting displayed for mandatory fields
-- Employee submit an Eligibility Request
-- Employee submit a Funding Request
-- Employee submit a Proof of Completion
-- Employee submit a Out Of Network Request
-- Employee submit a Out Of Network Request for a not listed provider
-- Employee submit a Student Loan Request
-- Employee void eligibility request
-- Employee Edit eligibility request
-- Employee submit direct bill eligibility request
-- Employee submit direct bill Funding request request
-- Employee submit direct bill a Proof of Completion
+## Features
 
----
+- Parses Cypress test files to extract documentation
+- Generates structured documentation in markdown format
+- Supports custom documentation formats
+- Maintains documentation that's always in sync with your codebase
 
-## File: **vbr-employee.cy.js**
+## Installation
 
-## Describe: **VBR Employee**
+```bash
+# Clone the repository
+git clone https://github.com/yourusername/cypress-docgen.git
 
-### Context: **Sign Up**
+# Navigate to the project directory
+cd cypress-docgen
 
-#### Tests
-- Create a new user
-- Create a new user and fill questionary with more than 12 credits
-- Create a new user and fill questionary with less than 12 credits
-- Update the employee personal details
-- Validate if the error messages are getting displayed for mandatory fields
-- Employee submit an Eligibility Request for Sophia Pathway Program
-- Employee submit an Eligibility Request for a Sophia Foundations Program
+# Install dependencies
+npm install
+```
 
----
+## Usage
 
+1. Build the project:
+
+```bash
+npm run build
+```
+
+2. Run the documentation generator:
+
+```bash
+npm run start
+```
+
+3. Or use the combined command:
+
+```bash
+npm run generate:doc
+```
+
+When running any of these commands, the tool will automatically scan and process all `.cy.js`, `.cy.ts`, `.spec.js`, and `.spec.ts` files located in the `/tests` directory to generate the documentation.
+
+## Configuration
+
+The tool can be configured by modifying the configuration files in the project. More details will be added as the project evolves.
+
+## Requirements
+
+- Node.js (latest LTS version recommended)
+- TypeScript
+- Cypress (in the project you want to document)
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.

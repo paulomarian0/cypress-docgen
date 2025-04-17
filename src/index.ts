@@ -24,5 +24,5 @@ files.forEach(file => {
   markdown += `\n---\n\n`;
 });
 
-fs.writeFileSync('README.md', markdown);
-console.log('✅ README.md gerado com sucesso!');
+fs.writeFileSync('spec-docs.md', markdown);
+console.log('✅ spec-docs.md generated successfully!');
