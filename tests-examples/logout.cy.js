@@ -1,11 +1,12 @@
 /// <reference types="cypress" />
 
+const { describe } = require("node:test");
+
 /**
  * @description Tests for the authentication functionality
  * @author Cypress-DocGen
  */
-context('Authentication', () => {
-  describe('Valid Login Credentials', () => {
+describe('Authentication', () => {
     it('should allow login with correct username and password', () => {
       // Navigate to login page
       cy.visit('/login');
@@ -19,9 +20,7 @@ context('Authentication', () => {
       cy.url().should('include', '/dashboard');
       cy.contains('Welcome').should('be.visible');
     });
-  });
 
-  describe('Invalid Login Credentials', () => {
     it('should display error message with incorrect credentials', () => {
       // Navigate to login page
       cy.visit('/login');
@@ -35,4 +34,3 @@ context('Authentication', () => {
       cy.contains('Invalid credentials').should('be.visible');
     });
   });
-});

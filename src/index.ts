@@ -37,11 +37,35 @@ const testFiles = findFilesRecursively('.', filePattern);
 
 let markdown = `# Cypress Test Documentation\n\n`;
 
+// Agrupar os arquivos por tipo
+const groupedFiles = {
+  cypress: testFiles.filter(file => file.includes('.cy.')),
+  spec: testFiles.filter(file => file.includes('.spec.'))
+};
+
+// Adicionar estatísticas ao documento
+markdown += `## Summary\n\n`;
+markdown += `- Total Test Files: **${testFiles.length}**\n`;
+markdown += `- Cypress Files (.cy): **${groupedFiles.cypress.length}**\n`;
+markdown += `- Spec Files (.spec): **${groupedFiles.spec.length}**\n\n`;
+markdown += `---\n\n`;
+
+// Processar os arquivos de teste
 testFiles.forEach(filePath => {
   const result = parseCypressTestFile(filePath);
 
   markdown += `## File: **${result.fileName}**\n\n`;
   markdown += `**Path:** ${result.filePath}\n\n`;
+  
+  // Adicionar descrição e autor se disponíveis
+  if (result.description) {
+    markdown += `**Description:** ${result.description}\n\n`;
+  }
+  
+  if (result.author) {
+    markdown += `**Author:** ${result.author}\n\n`;
+  }
+  
   markdown += `## Describe: **${result.describe}**\n\n`;
   markdown += `### Context: **${result.context}**\n\n`;
   markdown += `#### Tests\n`;
@@ -55,4 +79,4 @@ testFiles.forEach(filePath => {
 
 fs.writeFileSync('spec-docs.md', markdown);
 console.log('✅ spec-docs.md generated successfully!');
-console.log(`Found ${testFiles.length} test files.`);
+console.log(`Found ${testFiles.length} test files (${groupedFiles.cypress.length} .cy files, ${groupedFiles.spec.length} .spec files).`);

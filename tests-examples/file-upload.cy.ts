@@ -1,38 +1,49 @@
 /// <reference types="cypress" />
-import { faker } from '@faker-js/faker';
 import 'cypress-file-upload';
 
-describe('Admin', () => {
-    const url = Cypress.env('ADMIN_stg_url')
-    const username = Cypress.env('STG_ADMIN_Email')
-    const password = Cypress.env('STG_ADMIN_Pass')
-    cy.visit('http://localhost:3000/login');
-
-    Cypress.on('uncaught:exception', (err, runnable) => {
-        return false; // Prevents Cypress from failing the test
-    });
+/**
+ * @description Tests for the file upload functionality
+ * @author Cypress-DocGen
+ */
+context('File Upload', () => {
+  describe('Document Upload', () => {
     beforeEach(() => {
-        cy.visit(url);
-
-    });
-    context('Admin login', () => {
-
-        it('should log in successfully with valid credentials', () => {
-            cy.logInAdmin(username, password);
-            //Assert 
-            cy.get('[data-cy="workspaces-header"]').should('exist')
-            cy.contains('Workspaces').should('exist')
-        });
-
-        it('should require email and password fields', () => {
-            cy.get('[data-cy="login-submit"]').click();
-            cy.contains('You must provide an email').should('be.visible');
-            cy.contains('You must provide a password').should('be.visible');
-        });
-
-
-
+      // Navigate to the upload page before each test
+      cy.visit('/upload');
     });
 
+    it('should upload a PDF file successfully', () => {
+      // Prepare the file upload
+      cy.fixture('example.pdf').then((fileContent) => {
+        cy.get('input[type="file"]').attachFile({
+          fileContent,
+          fileName: 'example.pdf',
+          mimeType: 'application/pdf'
+        });
+        
+        // Submit the upload
+        cy.get('button[type=submit]').click();
+        
+        // Assert success message
+        cy.contains('File uploaded successfully').should('be.visible');
+      });
+    });
 
+    it('should display error when uploading unsupported file type', () => {
+      // Prepare invalid file upload
+      cy.fixture('example.exe').then((fileContent) => {
+        cy.get('input[type="file"]').attachFile({
+          fileContent,
+          fileName: 'example.exe',
+          mimeType: 'application/octet-stream'
+        });
+        
+        // Submit the upload
+        cy.get('button[type=submit]').click();
+        
+        // Assert error message
+        cy.contains('Unsupported file type').should('be.visible');
+      });
+    });
+  });
 });
