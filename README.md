@@ -9,8 +9,10 @@ Cypress-DocGen extracts documentation from your Cypress test files and generates
 ## Features
 
 - Parses Cypress test files to extract documentation
+- Supports both `.cy` and `.spec` file formats
+- Extracts test metadata from JSDoc-style comments
 - Generates structured documentation in markdown format
-- Supports custom documentation formats
+- Groups test files by type for better organization
 - Maintains documentation that's always in sync with your codebase
 
 ## Installation
@@ -46,7 +48,43 @@ npm run start
 npm run generate:doc
 ```
 
-When running any of these commands, the tool will automatically scan and process all `.cy.js`, `.cy.ts`, `.spec.js`, and `.spec.ts` files located in the `/tests` directory to generate the documentation.
+When running any of these commands, the tool will recursively scan your entire project directory and process all `.cy.js`, `.cy.ts`, `.spec.js`, and `.spec.ts` files to generate the documentation.
+
+## Metadata Support
+
+You can add metadata to your tests using JSDoc-style comments:
+
+```javascript
+/**
+ * @description This is a description of the test suite
+ * @author Your Name
+ */
+context("Test Suite", () => {
+  // Your tests here
+});
+```
+
+The tool will extract these metadata fields and include them in the generated documentation.
+
+## Output
+
+The tool generates a `spec-docs.md` file with the following information:
+
+### Summary Section
+
+- Total number of test files
+- Count of Cypress (.cy) files
+- Count of Spec (.spec) files
+
+### For Each Test File
+
+- File name and path relative to the project root
+- Description and author (if provided in JSDoc comments)
+- File type (cypress or spec)
+- URL being tested in the test
+- Describe blocks
+- Context blocks
+- All test cases (it blocks)
 
 ## Configuration
 
