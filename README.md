@@ -99,6 +99,10 @@ The tool can be configured by modifying the configuration files in the project. 
 
 Contributions are welcome! Please feel free to submit a Pull Request.
 
+#### Contributors❤️
+
+[![langflow contributors](https://contrib.rocks/image?repo=paulomarian0/cypress-docgen)](https://github.com/paulomarian0/cypress-docgen/graphs/contributors)
+
 ## License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
