@@ -2,15 +2,30 @@
 
 ## Summary
 
-- Total Test Files: **7**
+- Total Test Files: **8**
 - Cypress Files (.cy): **6**
 - Spec Files (.spec): **1**
+- Test Files (.test): **1**
 
 ---
 
 ## File: **contact.cy.ts**
 
 **Path:** tests-examples\contact.cy.ts
+
+## Describe: **Message Submission**
+
+### Context: **Contact Form**
+
+#### Tests
+- should send message with all fields filled correctly
+- should display error if email field is empty
+
+---
+
+## File: **example.test.js**
+
+**Path:** tests-examples\example.test.js
 
 ## Describe: **Message Submission**
 

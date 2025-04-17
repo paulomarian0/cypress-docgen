@@ -12,7 +12,12 @@ export function parseCypressTestFile(filePath: string): IParsedTestFile {
   const fileName = path.basename(filePath);
   const relativePath = path.relative(process.cwd(), filePath);
   const fileExtension = path.extname(filePath);
-  const fileType = fileName.includes('.cy') ? 'cypress' : 'spec';
+  
+  // Determine file type based on file name
+  let fileType = 'other';
+  if (fileName.includes('.cy.')) fileType = 'cypress';
+  else if (fileName.includes('.spec.')) fileType = 'spec';
+  else if (fileName.includes('.test.')) fileType = 'test';
 
   // Extract test structure with regular expressions
   const describeMatch = content.match(/describe\s*\(\s*['"`](.*?)['"`]/);

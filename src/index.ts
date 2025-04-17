@@ -33,8 +33,8 @@ function findFilesRecursively(dir: string, pattern: RegExp): string[] {
   return results;
 }
 
-// Find all Cypress test files (.cy.js/ts and .spec.js/ts)
-const filePattern = /\.(cy|spec)\.(js|ts)$/;
+// Find all Cypress test files (.cy.js/ts, .spec.js/ts, and .test.js/ts)
+const filePattern = /\.(cy|spec|test)\.(js|ts)$/;
 const testFiles = findFilesRecursively('.', filePattern);
 
 // Initialize markdown document
@@ -43,14 +43,16 @@ let markdown = `# Cypress Test Documentation\n\n`;
 // Group files by type for statistics
 const groupedFiles = {
   cypress: testFiles.filter(file => file.includes('.cy.')),
-  spec: testFiles.filter(file => file.includes('.spec.'))
+  spec: testFiles.filter(file => file.includes('.spec.')),
+  test: testFiles.filter(file => file.includes('.test.'))
 };
 
 // Add summary section with statistics
 markdown += `## Summary\n\n`;
 markdown += `- Total Test Files: **${testFiles.length}**\n`;
 markdown += `- Cypress Files (.cy): **${groupedFiles.cypress.length}**\n`;
-markdown += `- Spec Files (.spec): **${groupedFiles.spec.length}**\n\n`;
+markdown += `- Spec Files (.spec): **${groupedFiles.spec.length}**\n`;
+markdown += `- Test Files (.test): **${groupedFiles.test.length}**\n\n`;
 markdown += `---\n\n`;
 
 // Process each test file
@@ -92,4 +94,4 @@ testFiles.forEach(filePath => {
 // Write documentation to file
 fs.writeFileSync('spec-docs.md', markdown);
 console.log('✅ spec-docs.md generated successfully!');
-console.log(`Found ${testFiles.length} test files (${groupedFiles.cypress.length} .cy files, ${groupedFiles.spec.length} .spec files).`);
+console.log(`Found ${testFiles.length} test files (${groupedFiles.cypress.length} .cy files, ${groupedFiles.spec.length} .spec files, ${groupedFiles.test.length} .test files).`);
