@@ -36,8 +36,9 @@ export function parseCypressTestFile(filePath: string): IParsedTestFile {
   const descriptionMatch = content.match(/@description\s+(.*?)($|\n|\*)/);
   const authorMatch = content.match(/@author\s+(.*?)($|\n|\*)/);
 
-  const describe = describeMatch?.[1] ?? contextMatch?.[1] ?? 'N/A';
-  const context = contextMatch?.[1] ?? describeMatch?.[1] ?? 'N/A';
+  const describe = describeMatch?.[1] ?? 'N/A';
+  // Context só será preenchido se estiver explicitamente presente
+  const context = contextMatch?.[1] ?? '';
   const description = descriptionMatch?.[1]?.trim() ?? '';
   const author = authorMatch?.[1]?.trim() ?? '';
 

@@ -40,8 +40,6 @@
 
 **Path:** tests-examples\login.cy.js
 
-## Describe: **Valid Login Credentials**
-
 ### Context: **Authentication**
 
 #### Tests
@@ -55,8 +53,6 @@
 **Path:** tests-examples\logout.cy.js
 
 ## Describe: **Authentication**
-
-### Context: **Authentication**
 
 #### Tests
 - should allow login with correct username and password

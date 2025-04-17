@@ -66,8 +66,16 @@ testFiles.forEach(filePath => {
     markdown += `**Author:** ${result.author}\n\n`;
   }
   
-  markdown += `## Describe: **${result.describe}**\n\n`;
-  markdown += `### Context: **${result.context}**\n\n`;
+  // Mostrar Describe apenas se não for 'N/A'
+  if (result.describe !== 'N/A') {
+    markdown += `## Describe: **${result.describe}**\n\n`;
+  }
+  
+  // Mostrar Context apenas se estiver presente
+  if (result.context) {
+    markdown += `### Context: **${result.context}**\n\n`;
+  }
+  
   markdown += `#### Tests\n`;
 
   result.its.forEach(it => {
