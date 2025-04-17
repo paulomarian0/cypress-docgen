@@ -4,7 +4,8 @@
     "type": "commonjs",
     "scripts": {
         "build": "tsc",
-        "start": "node dist/index.js"
+        "start": "node dist/index.js",
+        "generate:doc": "npm run build && npm run start"
     },
     "devDependencies": {
         "@types/node": "^22.14.1",

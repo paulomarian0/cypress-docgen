@@ -1,86 +1,45 @@
 # Cypress Test Documentation
 
-## File: **cadastro.cy.ts**
+## File: **sso-employee.cy.js**
 
-### Describe
-**Formulário de cadastro**
+## Describe: **SSO Employee**
 
-### URL Visit
-`'/cadastro'`
+### Context: **Sign Up**
 
-### Context
-**Cadastro de novo usuário**
-
-### Tests
-- deve cadastrar um novo usuário com dados válidos
-- deve exibir erro ao tentar cadastrar com email já usado
-
----
-
-## File: **contact.cy.spec.ts**
-
-### Describe
-**Envio de mensagem**
-
-### URL Visit
-`'/contato'`
-
-### Context
-**Formulário de Contato**
-
-### Tests
-- deve enviar mensagem com todos os campos preenchidos corretamente
-- deve exibir erro se o campo de email estiver vazio
+#### Tests
+- Sign up with Employee ID
+- Sign up through Ping One
+- Validate signup information matches the personal information form
+- Validate if the employee is able to update his personal details
+- Validate if the error messages are getting displayed for mandatory fields
+- Employee submit an Eligibility Request
+- Employee submit a Funding Request
+- Employee submit a Proof of Completion
+- Employee submit a Out Of Network Request
+- Employee submit a Out Of Network Request for a not listed provider
+- Employee submit a Student Loan Request
+- Employee void eligibility request
+- Employee Edit eligibility request
+- Employee submit direct bill eligibility request
+- Employee submit direct bill Funding request request
+- Employee submit direct bill a Proof of Completion
 
 ---
 
-## File: **file-upload.cy.ts**
+## File: **vbr-employee.cy.js**
 
-### Describe
-**Admin**
+## Describe: **VBR Employee**
 
-### URL Visit
-`'http://localhost:3000/login'`
+### Context: **Sign Up**
 
-### Context
-**Admin login**
-
-### Tests
-- should log in successfully with valid credentials
-- should require email and password fields
-
----
-
-## File: **login.cy.js**
-
-### Describe
-**Login com credenciais válidas**
-
-### URL Visit
-`'/login'`
-
-### Context
-**Autenticação**
-
-### Tests
-- deve permitir o login com usuário e senha corretos
-- deve exibir mensagem de erro
-
----
-
-## File: **testes.cy.ts**
-
-### Describe
-**Página de Login**
-
-### URL Visit
-`'http://localhost:3000/login'`
-
-### Context
-**N/A**
-
-### Tests
-- Deve fazer login com credenciais válidas
+#### Tests
+- Create a new user
+- Create a new user and fill questionary with more than 12 credits
+- Create a new user and fill questionary with less than 12 credits
+- Update the employee personal details
+- Validate if the error messages are getting displayed for mandatory fields
+- Employee submit an Eligibility Request for Sophia Pathway Program
+- Employee submit an Eligibility Request for a Sophia Foundations Program
 
 ---
 
