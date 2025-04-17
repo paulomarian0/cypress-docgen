@@ -48,7 +48,7 @@ npm run start
 npm run generate:doc
 ```
 
-When running any of these commands, the tool will recursively scan your entire project directory and process all `.cy.js`, `.cy.ts`, `.spec.js`, and `.spec.ts` files to generate the documentation.
+When running any of these commands, the tool will recursively scan your entire project directory and process all `.cy.js`, `.cy.ts`, `.spec.js`, `.spec.ts`, `test.ts`, and `test.ts` files to generate the documentation.
 
 ## Metadata Support
 

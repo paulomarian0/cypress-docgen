@@ -3,9 +3,9 @@
 ## Summary
 
 - Total Test Files: **8**
-- Cypress Files (.cy): **6**
-- Spec Files (.spec): **1**
-- Test Files (.test): **1**
+- Cypress Files (.cy): **4**
+- Spec Files (.spec): **2**
+- Test Files (.test): **2**
 
 ---
 
@@ -37,9 +37,9 @@
 
 ---
 
-## File: **file-upload.cy.ts**
+## File: **file-upload.spec.ts**
 
-**Path:** tests-examples\file-upload.cy.ts
+**Path:** tests-examples\file-upload.spec.ts
 
 ## Describe: **Document Upload**
 
@@ -75,9 +75,9 @@
 
 ---
 
-## File: **product.cy.ts**
+## File: **product.test.ts**
 
-**Path:** tests-examples\product.cy.ts
+**Path:** tests-examples\product.test.ts
 
 ## Describe: **Product Listing**
 
