@@ -14,6 +14,7 @@ Cypress-DocGen extracts documentation from your Cypress test files and generates
 - Generates structured documentation in markdown format
 - Groups test files by type for better organization
 - Maintains documentation that's always in sync with your codebase
+- Supports generating documentation files per directory
 
 ## Installation
 
@@ -29,6 +30,8 @@ npm install
 ```
 
 ## Usage
+
+### Generate a single documentation file
 
 1. Build the project:
 
@@ -48,7 +51,17 @@ npm run start
 npm run generate:doc
 ```
 
-When running any of these commands, the tool will recursively scan your entire project directory and process all `.cy.js`, `.cy.ts`, `.spec.js`, `.spec.ts`, `.test.js`, and `.test.ts` files to generate the documentation.
+This will generate a single `spec-docs.md` file containing all test documentation.
+
+### Generate documentation files per directory
+
+To generate separate documentation files for each directory containing tests:
+
+```bash
+npm run generate:doc:folder
+```
+
+This will create a `spec-docs-folder` directory with separate Markdown files for each folder containing tests in your project.
 
 ## Metadata Support
 
@@ -68,22 +81,33 @@ The tool will extract these metadata fields and include them in the generated do
 
 ## Output
 
-The tool generates a `spec-docs.md` file with the following information:
+### Single Documentation File
 
-### Summary Section
+When using `npm run generate:doc`, the tool generates a `spec-docs.md` file with the following information:
+
+#### Summary Section
 
 - Total number of test files
 - Count of Cypress (.cy) files
 - Count of Spec (.spec) files
 - Count of Test (.test) files
 
-### For Each Test File
+#### For Each Test File
 
 - File name and path relative to the project root
 - Description and author (if provided in JSDoc comments)
 - Describe blocks (when present)
 - Context blocks (when present)
 - All test cases (it blocks)
+
+### Directory-Based Documentation
+
+When using `npm run generate:doc:folder`, the tool creates separate Markdown files for each directory containing tests:
+
+- Files are stored in a `spec-docs-folder` directory
+- Each file is named after the directory path (with path separators replaced by hyphens)
+- Each file contains only the tests from that specific directory
+- The format of each file is similar to the single documentation file
 
 ## Configuration
 
