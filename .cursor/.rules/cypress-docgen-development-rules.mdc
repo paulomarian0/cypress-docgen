@@ -1,0 +1,240 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+// Rule to automatically update the README.md when changes occur in the project structure or functionality
+
+export const updateReadmeOnChanges = {
+  name: "Automatically update README.md",
+  description: "Keeps the README.md updated with project changes",
+  onFileChange: async ({
+    changedFiles,
+    workspace,
+    exec,
+    file
+  }) => {
+    // Check if the changed files are relevant for documentation
+    const relevantFiles = changedFiles.filter(file => {
+      const isSourceFile = file.includes('/src/') && file.endsWith('.ts');
+      const isPackageConfig = file.includes('package.json');
+      const isTestFile = /\.(cy|spec|test)\.(js|ts)$/.test(file);
+      const isScriptFile = file.includes('/scripts/') && (file.endsWith('.js') || file.endsWith('.ts'));
+      const isConfigFile = file.includes('tsconfig.json') || file.endsWith('.config.js');
+      const isOutputFile = file.includes('spec-docs.md') || file.includes('spec-docs-folder/');
+      
+      return isSourceFile || isPackageConfig || isTestFile || isScriptFile || isConfigFile || isOutputFile;
+    });
+
+    if (relevantFiles.length === 0) return;
+
+    // Read current README.md content
+    const readmePath = 'README.md';
+    const readmeContent = await file.read(readmePath);
+    
+    // Get updated project information
+    const packageJson = JSON.parse(await file.read('package.json'));
+    const scripts = packageJson.scripts || {};
+    const dependencies = { 
+      ...packageJson.dependencies || {}, 
+      ...packageJson.devDependencies || {} 
+    };
+    
+    // Collect information from source files
+    const sourceFiles = await workspace.findFiles('src/**/*.ts');
+    const outputFiles = await workspace.findFiles('spec-docs*/**');
+    const configFiles = await workspace.findFiles('*.json');
+    
+    // Analyze files to extract relevant information
+    const features = await extractFeatures(sourceFiles, file);
+    const installationSteps = generateInstallationSteps(packageJson);
+    const usageInstructions = generateUsageInstructions(scripts, sourceFiles);
+    const configurationDetails = await generateConfigurationDetails(configFiles, file);
+    const outputDetails = generateOutputDetails(outputFiles, sourceFiles);
+    
+    // Update different README sections
+    let newReadmeContent = readmeContent;
+    
+    // Update Features section
+    newReadmeContent = replaceSection(
+      newReadmeContent,
+      '## Features',
+      '## Installation',
+      features
+    );
+    
+    // Update Installation section
+    newReadmeContent = replaceSection(
+      newReadmeContent,
+      '## Installation',
+      '## Usage',
+      installationSteps
+    );
+    
+    // Update Usage section
+    newReadmeContent = replaceSection(
+      newReadmeContent,
+      '## Usage',
+      '## Metadata Support',
+      usageInstructions
+    );
+    
+    // Update Output section
+    newReadmeContent = replaceSection(
+      newReadmeContent,
+      '## Output',
+      '## Configuration',
+      outputDetails
+    );
+    
+    // Update Configuration section
+    newReadmeContent = replaceSection(
+      newReadmeContent,
+      '## Configuration',
+      '## Requirements',
+      configurationDetails
+    );
+    
+    // Check if content was actually changed
+    if (newReadmeContent !== readmeContent) {
+      await file.write(readmePath, newReadmeContent);
+      return `README.md updated with the latest project changes`;
+    }
+    
+    return null;
+  }
+};
+
+// Helper function to replace a section in the README
+function replaceSection(content, sectionStart, sectionEnd, newSection) {
+  const startIndex = content.indexOf(sectionStart);
+  if (startIndex === -1) return content;
+  
+  const afterStartIndex = startIndex + sectionStart.length;
+  const endIndex = content.indexOf(sectionEnd, afterStartIndex);
+  
+  if (endIndex === -1) return content;
+  
+  return content.substring(0, startIndex) + newSection + content.substring(endIndex);
+}
+
+// Extract features based on source files
+async function extractFeatures(sourceFiles, file) {
+  let featuresSection = '## Features\n\n';
+  
+  // Base list of features
+  const featuresList = [
+    'Parses Cypress test files to extract documentation',
+    'Supports both `.cy`, `.spec` and `.test` file formats',
+    'Extracts test metadata from JSDoc-style comments',
+    'Generates structured documentation in markdown format',
+    'Groups test files by type for better organization',
+    'Maintains documentation that\'s always in sync with your codebase',
+  ];
+  
+  // Check for specific features based on files
+  if (sourceFiles.some(f => f.includes('folder-docs.ts'))) {
+    featuresList.push('Supports generating documentation files per directory');
+  }
+  
+  // Check for custom metadata support
+  const parserContent = sourceFiles.some(f => f.includes('parser.ts')) 
+    ? await file.read(`src/parser.ts`) 
+    : '';
+  
+  if (parserContent.includes('@author') || parserContent.includes('@description')) {
+    featuresList.push('Supports custom metadata fields (author, description, etc.)');
+  }
+  
+  // Generate formatted features section
+  featuresList.forEach(feature => {
+    featuresSection += `- ${feature}\n`;
+  });
+  
+  return featuresSection + '\n';
+}
+
+// Generate installation instructions
+function generateInstallationSteps(packageJson) {
+  let installationSection = '## Installation\n\n';
+  
+  installationSection += '```bash\n';
+  installationSection += '# Clone the repository\n';
+  installationSection += 'git clone https://github.com/yourusername/cypress-docgen.git\n\n';
+  installationSection += '# Navigate to the project directory\n';
+  installationSection += 'cd cypress-docgen\n\n';
+  installationSection += '# Install dependencies\n';
+  installationSection += 'npm install\n';
+  installationSection += '```\n\n';
+  
+  return installationSection;
+}
+
+// Generate usage instructions based on available scripts
+function generateUsageInstructions(scripts, sourceFiles) {
+  let usageSection = '## Usage\n\n';
+  
+  if (scripts['generate:doc']) {
+    usageSection += '### Generate a single documentation file\n\n';
+    usageSection += '1. Build the project:\n\n```bash\nnpm run build\n```\n\n';
+    usageSection += '2. Run the documentation generator:\n\n```bash\nnpm run start\n```\n\n';
+    usageSection += '3. Or use the combined command:\n\n```bash\nnpm run generate:doc\n```\n\n';
+    usageSection += 'This will generate a single `spec-docs.md` file containing all test documentation.\n\n';
+  }
+  
+  if (scripts['generate:doc:folder']) {
+    usageSection += '### Generate documentation files per directory\n\n';
+    usageSection += 'To generate separate documentation files for each directory containing tests:\n\n';
+    usageSection += '```bash\nnpm run generate:doc:folder\n```\n\n';
+    usageSection += 'This will create a `spec-docs-folder` directory with separate Markdown files for each folder containing tests in your project.\n\n';
+  }
+  
+  return usageSection;
+}
+
+// Generate output details based on output files and settings
+function generateOutputDetails(outputFiles, sourceFiles) {
+  let outputSection = '## Output\n\n';
+  
+  // Details for single documentation file
+  outputSection += '### Single Documentation File\n\n';
+  outputSection += 'When using `npm run generate:doc`, the tool generates a `spec-docs.md` file with the following information:\n\n';
+  outputSection += '#### Summary Section\n\n';
+  outputSection += '- Total number of test files\n';
+  outputSection += '- Count of Cypress (.cy) files\n';
+  outputSection += '- Count of Spec (.spec) files\n';
+  outputSection += '- Count of Test (.test) files\n\n';
+  outputSection += '#### For Each Test File\n\n';
+  outputSection += '- File name and path relative to the project root\n';
+  outputSection += '- Description and author (if provided in JSDoc comments)\n';
+  outputSection += '- Describe blocks (when present)\n';
+  outputSection += '- Context blocks (when present)\n';
+  outputSection += '- All test cases (it blocks)\n\n';
+
+  // If there's support for directory-based documentation
+  if (sourceFiles.some(f => f.includes('folder-docs.ts'))) {
+    outputSection += '### Directory-Based Documentation\n\n';
+    outputSection += 'When using `npm run generate:doc:folder`, the tool creates separate Markdown files for each directory containing tests:\n\n';
+    outputSection += '- Files are stored in a `spec-docs-folder` directory\n';
+    outputSection += '- Each file is named after the directory path (with path separators replaced by hyphens)\n';
+    outputSection += '- Each file contains only the tests from that specific directory\n';
+    outputSection += '- The format of each file is similar to the single documentation file\n\n';
+  }
+  
+  return outputSection;
+}
+
+// Generate configuration details based on config files
+async function generateConfigurationDetails(configFiles, file) {
+  let configSection = '## Configuration\n\n';
+  
+  configSection += 'The tool can be configured by modifying the configuration files in the project. More details will be added as the project evolves.\n\n';
+  
+  return configSection;
+}
+
+
+
+
+
+
