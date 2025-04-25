@@ -9,66 +9,6 @@
 
 ---
 
-## File: **contact.cy.ts**
-
-**Path:** tests-examples\contact.cy.ts
-
-## Describe: **Message Submission**
-
-### Context: **Contact Form**
-
-#### Tests
-- should send message with all fields filled correctly
-- should display error if email field is empty
-
----
-
-## File: **example.test.js**
-
-**Path:** tests-examples\example.test.js
-
-**Description:** Tests for the contact form functionality
-**Author:** John Doe
-
-## Describe: **Message Submission**
-
-### Context: **Contact Form**
-
-#### Tests
-- should send message with all fields filled correctly
-- should display error if email field is empty
-
----
-
-## File: **file-upload.spec.ts**
-
-**Path:** tests-examples\file-upload.spec.ts
-
-## Describe: **Document Upload**
-
-### Context: **File Upload**
-
-#### Tests
-- should upload a PDF file successfully
-- should display error when uploading unsupported file type
-
----
-
-## File: **login.cy.js**
-
-**Path:** tests-examples\login.cy.js
-
-**Description:** Tests for the authentication functionality
-**Author:** John Pork
-
-### Context: **Authentication**
-
-#### Tests
-- should allow login with correct username and password
-- should display error message with incorrect credentials
-
----
-
 ## File: **logout.cy.js**
 
 **Path:** tests-examples\logout.cy.js
@@ -114,6 +54,35 @@
 
 ---
 
+## File: **contact.cy.ts**
+
+**Path:** tests-examples\qa\contact.cy.ts
+
+## Describe: **Message Submission**
+
+### Context: **Contact Form**
+
+#### Tests
+- should send message with all fields filled correctly
+- should display error if email field is empty
+
+---
+
+## File: **login.cy.js**
+
+**Path:** tests-examples\qa\login.cy.js
+
+**Description:** Tests for the authentication functionality
+**Author:** John Pork
+
+### Context: **Authentication**
+
+#### Tests
+- should allow login with correct username and password
+- should display error message with incorrect credentials
+
+---
+
 ## File: **registration.cy.ts**
 
 **Path:** tests-examples\registration.cy.ts
@@ -128,6 +97,37 @@
 #### Tests
 - should register a new user with valid data
 - should display error when trying to register with an existing email
+
+---
+
+## File: **example.test.js**
+
+**Path:** tests-examples\stage\example.test.js
+
+**Description:** Tests for the contact form functionality
+**Author:** John Doe
+
+## Describe: **Message Submission**
+
+### Context: **Contact Form**
+
+#### Tests
+- should send message with all fields filled correctly
+- should display error if email field is empty
+
+---
+
+## File: **file-upload.spec.ts**
+
+**Path:** tests-examples\stage\file-upload.spec.ts
+
+## Describe: **Document Upload**
+
+### Context: **File Upload**
+
+#### Tests
+- should upload a PDF file successfully
+- should display error when uploading unsupported file type
 
 ---
 
