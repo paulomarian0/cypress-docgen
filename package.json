@@ -1,6 +1,6 @@
 {
-    "name": "@jojosuelobo/cypress-docgen",
-    "version": "1.0.0",
+    "name": "@cypress-docgen",
+    "version": "1.0.1",
     "type": "commonjs",
     "scripts": {
         "build": "tsc",
