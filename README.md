@@ -18,72 +18,82 @@ Cypress-DocGen extracts documentation from your Cypress test files and generates
 
 ## Installation
 
+You can install cypress-docgen globally or as a dev dependency in your project:
+
+### Global Installation
+
 ```bash
-# Clone the repository
-git clone https://github.com/yourusername/cypress-docgen.git
+npm install -g cypress-docgen
+```
 
-# Navigate to the project directory
-cd cypress-docgen
+### Local Installation (Recommended)
 
-# Install dependencies
-npm install
+```bash
+npm install --save-dev cypress-docgen
 ```
 
 ## Usage
 
-### Generate a single documentation file
+### Global Installation
 
-1. Build the project:
-
-```bash
-npm run build
-```
-
-2. Run the documentation generator:
+If installed globally, you can run the commands from anywhere:
 
 ```bash
-npm run start
+# Generate a single documentation file
+cypress-docgen
+
+# Generate documentation files per directory
+cypress-docgen-folder
 ```
 
-3. Or use the combined command:
+### Local Installation
+
+If installed locally, you can add scripts to your `package.json`:
+
+```json
+{
+  "scripts": {
+    "docs": "cypress-docgen",
+    "docs:folder": "cypress-docgen-folder"
+  }
+}
+```
+
+Then run:
 
 ```bash
-npm run generate:doc
+npm run docs
+npm run docs:folder
 ```
 
-This will generate a single `spec-docs.md` file containing all test documentation.
-
-### Generate documentation files per directory
-
-To generate separate documentation files for each directory containing tests:
+Or use npx to run directly:
 
 ```bash
-npm run generate:doc:folder
+npx cypress-docgen
+npx cypress-docgen-folder
 ```
 
-This will create a `spec-docs-folder` directory with separate Markdown files for each folder containing tests in your project.
+### Programmatic Usage
 
-## Metadata Support
-
-You can add metadata to your tests using JSDoc-style comments:
+You can also use cypress-docgen programmatically in your Node.js scripts:
 
 ```javascript
-/**
- * @description This is a description of the test suite
- * @author Your Name
- */
-context("Test Suite", () => {
-  // Your tests here
-});
-```
+const { generateSingleDoc, generateFolderDocs } = require('cypress-docgen');
 
-The tool will extract these metadata fields and include them in the generated documentation.
+// Generate single documentation file
+generateSingleDoc(); // Uses current directory
+generateSingleDoc('/path/to/your/project'); // Specify custom directory
+
+// Generate documentation files per directory
+generateFolderDocs(); // Uses current directory
+generateFolderDocs('/path/to/your/project'); // Specify custom directory
+```
 
 ## Output
 
 ### Single Documentation File
 
-When using `npm run generate:doc`, the tool generates a `spec-docs.md` file with the following information:
+When using `cypress-docgen`, the tool generates a `spec-docs.md` file with the following information:
 
 #### Summary Section
 
@@ -102,22 +112,51 @@ When using `npm run generate:doc`, the tool generates a `spec-docs.md` file with
 
 ### Directory-Based Documentation
 
-When using `npm run generate:doc:folder`, the tool creates separate Markdown files for each directory containing tests:
+When using `cypress-docgen-folder`, the tool creates separate Markdown files for each directory containing tests:
 
 - Files are stored in a `spec-docs-folder` directory
 - Each file is named after the directory path (with path separators replaced by hyphens)
 - Each file contains only the tests from that specific directory
 - The format of each file is similar to the single documentation file
 
-## Configuration
+## Metadata Support
 
-The tool can be configured by modifying the configuration files in the project. More details will be added as the project evolves.
+You can add metadata to your tests using JSDoc-style comments:
+
+```javascript
+/**
+ * @description This is a description of the test suite
+ * @author Your Name
+ */
+context("Test Suite", () => {
+  // Your tests here
+});
+```
+
+The tool will extract these metadata fields and include them in the generated documentation.
+
+## Development
+
+If you want to contribute to this project:
+
+```bash
+# Clone the repository
+git clone https://github.com/yourusername/cypress-docgen.git
+
+# Navigate to the project directory
+cd cypress-docgen
+
+# Install dependencies
+npm install
+
+# Build the project
+npm run build
+```
 
 ## Requirements
 
-- Node.js (latest LTS version recommended)
-- TypeScript
-- Cypress (in the project you want to document)
+- Node.js 14.0.0 or higher
+- Cypress tests in your project (the tool will scan for `.cy`, `.spec`, and `.test` files)
 
 ## Contributing
 
