@@ -11,7 +11,7 @@
 
 ## File: **contact.cy.ts**
 
-**Path:** tests-examples\qa\contact.cy.ts
+**Path:** tests-examples/qa/contact.cy.ts
 
 ## Describe: **Message Submission**
 
@@ -25,7 +25,7 @@
 
 ## File: **login.cy.js**
 
-**Path:** tests-examples\qa\login.cy.js
+**Path:** tests-examples/qa/login.cy.js
 
 **Description:** Tests for the authentication functionality
 **Author:** John Pork

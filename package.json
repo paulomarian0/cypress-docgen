@@ -16,9 +16,9 @@
     "scripts": {
         "build": "tsc",
         "prepublishOnly": "npm run build",
-        "start": "node dist/index.js",
+        "start": "node dist/cli.js",
         "generate:doc": "npm run build && npm run start",
-        "generate:doc:folder": "npm run build && node dist/folder-docs.js"
+        "generate:doc:folder": "npm run build && node dist/cli-folder.js"
     },
     "keywords": [
         "cypress",
@@ -28,15 +28,15 @@
         "e2e",
         "testing"
     ],
-    "author": "Your Name",
+    "author": "@jojosuelobo && @paulomarian0",
     "license": "MIT",
     "repository": {
         "type": "git",
-        "url": "https://github.com/yourusername/cypress-docgen.git"
+        "url": "https://github.com/paulomarian0/cypress-docgen.git"
     },
-    "homepage": "https://github.com/yourusername/cypress-docgen#readme",
+    "homepage": "https://github.com/paulomarian0/cypress-docgen",
     "bugs": {
-        "url": "https://github.com/yourusername/cypress-docgen/issues"
+        "url": "https://github.com/paulomarian0/cypress-docgen/issues"
     },
     "engines": {
         "node": ">=14.0.0"
