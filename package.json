@@ -1,15 +1,49 @@
 {
-    "name": "@cypress-docgen",
-    "version": "1.0.1",
-    "type": "commonjs",
+    "name": "cypress-docgen",
+    "version": "1.0.0",
+    "description": "A tool designed to automatically generate documentation from Cypress tests",
+    "main": "dist/index.js",
+    "types": "dist/index.d.ts",
+    "bin": {
+        "cypress-docgen": "dist/cli.js",
+        "cypress-docgen-folder": "dist/cli-folder.js"
+    },
+    "files": [
+        "dist",
+        "README.md",
+        "LICENSE"
+    ],
     "scripts": {
         "build": "tsc",
-        "start": "node dist/index.js",
+        "prepublishOnly": "npm run build",
+        "start": "node dist/cli.js",
         "generate:doc": "npm run build && npm run start",
-        "generate:doc:folder": "npm run build && node dist/folder-docs.js"
+        "generate:doc:folder": "npm run build && node dist/cli-folder.js"
+    },
+    "keywords": [
+        "cypress",
+        "documentation",
+        "test",
+        "generator",
+        "e2e",
+        "testing"
+    ],
+    "author": "@jojosuelobo && @paulomarian0",
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/paulomarian0/cypress-docgen.git"
+    },
+    "homepage": "https://github.com/paulomarian0/cypress-docgen",
+    "bugs": {
+        "url": "https://github.com/paulomarian0/cypress-docgen/issues"
+    },
+    "engines": {
+        "node": ">=14.0.0"
     },
     "devDependencies": {
         "@types/node": "^22.14.1",
         "typescript": "^5.3.3"
-    }
+    },
+    "dependencies": {}
 }

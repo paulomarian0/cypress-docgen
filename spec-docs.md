@@ -11,7 +11,7 @@
 
 ## File: **logout.cy.js**
 
-**Path:** tests-examples\logout.cy.js
+**Path:** tests-examples/logout.cy.js
 
 ## Describe: **Authentication**
 
@@ -23,7 +23,7 @@
 
 ## File: **product.test.ts**
 
-**Path:** tests-examples\product.test.ts
+**Path:** tests-examples/product.test.ts
 
 ## Describe: **Product Listing**
 
@@ -38,7 +38,7 @@
 
 ## File: **products.spec.js**
 
-**Path:** tests-examples\products.spec.js
+**Path:** tests-examples/products.spec.js
 
 **Description:** Tests for product search and advanced filtering
 **Author:** Josue Lobo
@@ -56,7 +56,7 @@
 
 ## File: **contact.cy.ts**
 
-**Path:** tests-examples\qa\contact.cy.ts
+**Path:** tests-examples/qa/contact.cy.ts
 
 ## Describe: **Message Submission**
 
@@ -70,7 +70,7 @@
 
 ## File: **login.cy.js**
 
-**Path:** tests-examples\qa\login.cy.js
+**Path:** tests-examples/qa/login.cy.js
 
 **Description:** Tests for the authentication functionality
 **Author:** John Pork
@@ -85,7 +85,7 @@
 
 ## File: **registration.cy.ts**
 
-**Path:** tests-examples\registration.cy.ts
+**Path:** tests-examples/registration.cy.ts
 
 **Description:** Tests for user registration functionality
 **Author:** Paulo Mariano
@@ -102,7 +102,7 @@
 
 ## File: **example.test.js**
 
-**Path:** tests-examples\stage\example.test.js
+**Path:** tests-examples/stage/example.test.js
 
 **Description:** Tests for the contact form functionality
 **Author:** John Doe
@@ -119,7 +119,7 @@
 
 ## File: **file-upload.spec.ts**
 
-**Path:** tests-examples\stage\file-upload.spec.ts
+**Path:** tests-examples/stage/file-upload.spec.ts
 
 ## Describe: **Document Upload**
 

@@ -11,7 +11,7 @@
 
 ## File: **example.test.js**
 
-**Path:** tests-examples\stage\example.test.js
+**Path:** tests-examples/stage/example.test.js
 
 **Description:** Tests for the contact form functionality
 **Author:** John Doe
@@ -28,7 +28,7 @@
 
 ## File: **file-upload.spec.ts**
 
-**Path:** tests-examples\stage\file-upload.spec.ts
+**Path:** tests-examples/stage/file-upload.spec.ts
 
 ## Describe: **Document Upload**
 

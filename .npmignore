@@ -1,0 +1,27 @@
+# Source files
+src/
+tsconfig.json
+
+# Build artifacts (only include dist/)
+node_modules/
+
+# Test files and examples
+tests-examples/
+spec-docs-folder/
+spec-docs.md
+
+# Development files
+.git/
+.cursor/
+.gitignore
+package-lock.json
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db 

@@ -90,41 +90,49 @@ function generateMarkdownForDirectory(directoryPath: string, files: string[]): s
     return markdown;
 }
 
-function createDocFolder() {
-    const docFolderPath = path.join(process.cwd(), 'spec-docs-folder');
+function createDocFolder(workingDir: string): string {
+    const docFolderPath = path.join(workingDir, 'spec-docs-folder');
     if (!fs.existsSync(docFolderPath)) {
         fs.mkdirSync(docFolderPath);
     }
     return docFolderPath;
 }
 
-function main() {
-    const filePattern = /\.(cy|spec|test)\.(js|ts)$/;
-    const testFiles = findFilesRecursively('.', filePattern);
+export function generateFolderDocs(workingDir: string = process.cwd()): void {
+    const originalCwd = process.cwd();
+    
+    try {
+        // Change to the target directory
+        process.chdir(workingDir);
+        
+        const filePattern = /\.(cy|spec|test)\.(js|ts)$/;
+        const testFiles = findFilesRecursively('.', filePattern);
 
-    const filesByDirectory = groupFilesByDirectory(testFiles);
+        const filesByDirectory = groupFilesByDirectory(testFiles);
 
-    const docFolderPath = createDocFolder();
+        const docFolderPath = createDocFolder(workingDir);
 
-    let totalDocumentsGenerated = 0;
-    const directories = Object.keys(filesByDirectory);
+        let totalDocumentsGenerated = 0;
+        const directories = Object.keys(filesByDirectory);
 
-    directories.forEach(directory => {
-        const files = filesByDirectory[directory];
-        const markdown = generateMarkdownForDirectory(directory, files);
+        directories.forEach(directory => {
+            const files = filesByDirectory[directory];
+            const markdown = generateMarkdownForDirectory(directory, files);
 
-        const safeDirectoryName = directory.replace(/[\\\/]/g, '-').replace(/^\./, '').replace(/^-/, '');
-        const outputFilename = safeDirectoryName || 'root';
+            const safeDirectoryName = directory.replace(/[\\\/]/g, '-').replace(/^\./, '').replace(/^-/, '');
+            const outputFilename = safeDirectoryName || 'root';
 
-        const outputPath = path.join(docFolderPath, `${outputFilename}.md`);
-        fs.writeFileSync(outputPath, markdown);
-        totalDocumentsGenerated++;
+            const outputPath = path.join(docFolderPath, `${outputFilename}.md`);
+            fs.writeFileSync(outputPath, markdown);
+            totalDocumentsGenerated++;
 
-        console.log(`Generated documentation for directory: ${directory}`);
-    });
+            console.log(`Generated documentation for directory: ${directory}`);
+        });
 
-    console.log(`✅ Generated ${totalDocumentsGenerated} markdown files in the docs folder.`);
-    console.log(`Found ${testFiles.length} test files across ${directories.length} directories.`);
-}
-
-main(); 
+        console.log(`✅ Generated ${totalDocumentsGenerated} markdown files in the docs folder.`);
+        console.log(`Found ${testFiles.length} test files across ${directories.length} directories.`);
+    } finally {
+        // Restore original working directory
+        process.chdir(originalCwd);
+    }
+} 
