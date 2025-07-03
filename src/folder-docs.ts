@@ -75,16 +75,26 @@ function generateMarkdownForDirectory(directoryPath: string, files: string[]): s
             markdown += `## Describe: **${result.describe}**\n\n`;
         }
 
-        if (result.context) {
-            markdown += `### Context: **${result.context}**\n\n`;
+        // Handle multiple contexts
+        if (result.contexts && result.contexts.length > 0) {
+            result.contexts.forEach(context => {
+                markdown += `### Context: **${context.name}**\n\n`;
+                markdown += `#### Tests\n`;
+                context.tests.forEach(test => {
+                    markdown += `- ${test}\n`;
+                });
+                markdown += `\n`;
+            });
+        } else if (result.its && result.its.length > 0) {
+            // Fallback for files without contexts
+            markdown += `#### Tests\n`;
+            result.its.forEach(it => {
+                markdown += `- ${it}\n`;
+            });
+            markdown += `\n`;
         }
 
-        markdown += `#### Tests\n`;
-        result.its.forEach(it => {
-            markdown += `- ${it}\n`;
-        });
-
-        markdown += `\n---\n\n`;
+        markdown += `---\n\n`;
     });
 
     return markdown;

@@ -2,10 +2,35 @@
 
 ## Summary
 
-- Total Test Files: **8**
-- Cypress Files (.cy): **4**
+- Total Test Files: **9**
+- Cypress Files (.cy): **5**
 - Spec Files (.spec): **2**
 - Test Files (.test): **2**
+
+---
+
+## File: **createEmployeeAPI.cy.js**
+
+**Path:** tests-examples/createEmployeeAPI.cy.js
+
+## Describe: **Employee API Tests**
+
+### Context: **Create Employee**
+
+#### Tests
+- should create an employee via API
+- should return an error when creating an employee that already exists
+
+### Context: **Update Employee**
+
+#### Tests
+- should update an employee via API
+
+### Context: **Delete Employee**
+
+#### Tests
+- should delete an employee via API
+- should return an error when deleting an employee that does not exist
 
 ---
 
@@ -14,6 +39,8 @@
 **Path:** tests-examples/logout.cy.js
 
 ## Describe: **Authentication**
+
+### Context: **Authentication**
 
 #### Tests
 - should allow login with correct username and password
