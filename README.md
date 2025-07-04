@@ -141,7 +141,7 @@ If you want to contribute to this project:
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/cypress-docgen.git
+git clone https://github.com/paulomarian0/cypress-docgen.git
 
 # Navigate to the project directory
 cd cypress-docgen
@@ -164,7 +164,7 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 #### Contributors❤️
 
-[![langflow contributors](https://contrib.rocks/image?repo=paulomarian0/cypress-docgen)](https://github.com/paulomarian0/cypress-docgen/graphs/contributors)
+[![cypress-docgen contributors](https://contrib.rocks/image?repo=paulomarian0/cypress-docgen)](https://github.com/paulomarian0/cypress-docgen/graphs/contributors)
 
 ## License
 
