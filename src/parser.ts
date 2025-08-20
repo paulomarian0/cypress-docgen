@@ -1,6 +1,6 @@
 import fs from 'fs';
 import path from 'path';
-import { IParsedTestFile, ITestContext } from './types';
+import { IParsedTestFile, ITestContext, IMochawesomeReport } from './types';
 
 interface TestPosition {
   title: string;
@@ -132,4 +132,36 @@ export function parseCypressTestFile(filePath: string): IParsedTestFile {
     description,
     author
   };
+}
+
+export function getJsonMochawesome(reportsDir: string): IMochawesomeReport[]{
+  const reports: IMochawesomeReport[] = [];
+
+  if (!fs.existsSync(reportsDir)) {
+    console.error(`Diretório não encontrado: ${reportsDir}`);
+    return reports;
+  }
+
+  // Reads all files in the directory
+  const files = fs.readdirSync(reportsDir);
+
+  // Filters only .json files
+  const jsonFiles = files.filter(f => f.endsWith(".json"));
+
+  for (const fileName of jsonFiles) {
+    const filePath = path.join(reportsDir, fileName);
+    try {
+      const rawData = fs.readFileSync(filePath, "utf8").trim();
+      if (!rawData) {
+        console.warn(`Arquivo vazio: ${filePath}`);
+        continue;
+      }
+      const data: IMochawesomeReport = JSON.parse(rawData);
+      reports.push(data);
+    } catch (error) {
+      console.error(`Erro ao ler/parsar o arquivo ${fileName}:`, error);
+    }
+  }
+
+  return reports;
 }

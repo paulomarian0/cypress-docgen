@@ -1,0 +1,128 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 2,
+    "passes": 2,
+    "pending": 0,
+    "failures": 0,
+    "testsRegistered": 2,
+    "passPercent": 100,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false,
+    "start": "2025-08-20T14:30:34.652Z",
+    "end": "2025-08-20T14:30:37.932Z",
+    "duration": 3280
+  },
+  "results": [
+    {
+      "uuid": "e04eec73-bf82-432c-b2bf-8a68ba70692e",
+      "title": "",
+      "fullFile": "cypress\\e2e\\card.cy.js",
+      "file": "cypress\\e2e\\card.cy.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "d9fbf4cb-71f1-4101-9393-1626b8c7a487",
+          "title": "▪️ TRY ADDING AN ITEM TO THE CART AND VERIFY IF IT HAS BEEN ADDED",
+          "fullFile": "cypress\\e2e\\card.cy.js",
+          "file": "cypress\\e2e\\card.cy.js",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "1 - Test button add to Cart",
+              "fullTitle": "▪️ TRY ADDING AN ITEM TO THE CART AND VERIFY IF IT HAS BEEN ADDED 1 - Test button add to Cart",
+              "timedOut": null,
+              "duration": 2063,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "//------------------------------------------------\n// ACT\n//------------------------------------------------\nswagLabs.selectors.addCartBackpack().click();\n//------------------------------------------------\n// ASSERT\n//------------------------------------------------\nswagLabs.selectors.removeBackpack().should('be.visible');",
+              "err": {},
+              "uuid": "ea02f852-8080-4081-a621-0a8b7622516a",
+              "parentUUID": "d9fbf4cb-71f1-4101-9393-1626b8c7a487",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "2 - Validate if the item was added to the cart",
+              "fullTitle": "▪️ TRY ADDING AN ITEM TO THE CART AND VERIFY IF IT HAS BEEN ADDED 2 - Validate if the item was added to the cart",
+              "timedOut": null,
+              "duration": 1166,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "//------------------------------------------------\n// ACT\n//------------------------------------------------\nswagLabs.selectors.addCartBackpack().click();\nswagLabs.selectors.btnCart().click();\n//------------------------------------------------\n// ASSERT\n//------------------------------------------------\nswagLabs.selectors.nameIten().should('contain.text', 'Sauce Labs Backpack');",
+              "err": {},
+              "uuid": "597fc1bd-e894-43a7-a1db-6157aefe595b",
+              "parentUUID": "d9fbf4cb-71f1-4101-9393-1626b8c7a487",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "ea02f852-8080-4081-a621-0a8b7622516a",
+            "597fc1bd-e894-43a7-a1db-6157aefe595b"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 3229,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.2.0"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "report-2025-08-20_11-30-30",
+        "saveHtml": false,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.3"
+    },
+    "marge": {
+      "options": {
+        "reportDir": "cypress\\reports\\.jsons",
+        "overwrite": false,
+        "html": false,
+        "json": true,
+        "saveJson": true,
+        "reportFilename": "report-2025-08-20_11-30-30",
+        "embeddedScreenshots": true,
+        "inlineAssets": true
+      },
+      "version": "6.2.0"
+    }
+  }
+}
