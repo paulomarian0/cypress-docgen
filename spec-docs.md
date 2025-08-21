@@ -8,7 +8,7 @@
 |------------------------|-------------------------|
 | **System**             | cypress-docgen |
 | **Version**            | -                       |
-| **Execution Date**     | 2025/08/20 14:21:36             |
+| **Execution Date**     | 2025/08/21 14:02:16             |
 | **Responsible**        | -                       |
 
 ## 2. Objective
@@ -55,6 +55,7 @@ Consolidated information separated by test
 ## Summary
 
 - Total Test Files: **9**
+- Total Individual Tests: **23**
 - Cypress Files (.cy): **5**
 - Spec Files (.spec): **2**
 - Test Files (.test): **2**
@@ -63,7 +64,7 @@ Consolidated information separated by test
 
 ## File: **createEmployeeAPI.cy.js**
 
-**Path:** tests-examples\createEmployeeAPI.cy.js
+**Path:** tests-examples/createEmployeeAPI.cy.js
 
 ## Describe: **Employee API Tests**
 
@@ -86,7 +87,7 @@ Consolidated information separated by test
 
 ## File: **logout.cy.js**
 
-**Path:** tests-examples\logout.cy.js
+**Path:** tests-examples/logout.cy.js
 
 ## Describe: **Authentication**
 
@@ -98,7 +99,7 @@ Consolidated information separated by test
 
 ## File: **product.test.ts**
 
-**Path:** tests-examples\product.test.ts
+**Path:** tests-examples/product.test.ts
 
 ## Describe: **Product Listing**
 
@@ -111,7 +112,7 @@ Consolidated information separated by test
 
 ## File: **products.spec.js**
 
-**Path:** tests-examples\products.spec.js
+**Path:** tests-examples/products.spec.js
 
 **Description:** Tests for product search and advanced filtering
 **Author:** Josue Lobo
@@ -127,7 +128,7 @@ Consolidated information separated by test
 
 ## File: **contact.cy.ts**
 
-**Path:** tests-examples\qa\contact.cy.ts
+**Path:** tests-examples/qa/contact.cy.ts
 
 ## Describe: **Message Submission**
 
@@ -139,7 +140,7 @@ Consolidated information separated by test
 
 ## File: **login.cy.js**
 
-**Path:** tests-examples\qa\login.cy.js
+**Path:** tests-examples/qa/login.cy.js
 
 **Description:** Tests for the authentication functionality
 **Author:** John Pork
@@ -152,7 +153,7 @@ Consolidated information separated by test
 
 ## File: **registration.cy.ts**
 
-**Path:** tests-examples\registration.cy.ts
+**Path:** tests-examples/registration.cy.ts
 
 **Description:** Tests for user registration functionality
 **Author:** Paulo Mariano
@@ -167,7 +168,7 @@ Consolidated information separated by test
 
 ## File: **example.test.js**
 
-**Path:** tests-examples\stage\example.test.js
+**Path:** tests-examples/stage/example.test.js
 
 **Description:** Tests for the contact form functionality
 **Author:** John Doe
@@ -182,7 +183,7 @@ Consolidated information separated by test
 
 ## File: **file-upload.spec.ts**
 
-**Path:** tests-examples\stage\file-upload.spec.ts
+**Path:** tests-examples/stage/file-upload.spec.ts
 
 ## Describe: **Document Upload**
 

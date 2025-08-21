@@ -3,7 +3,7 @@
 ## Summary
 
 - Total Test Files: **2**
-- Cypress Files (.cy): **0**
+- Total Individual Tests: **4**
 - Spec Files (.spec): **1**
 - Test Files (.test): **1**
 
