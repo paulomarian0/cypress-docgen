@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import { parseCypressTestFile, getJsonMochawesome } from './parser';
-import { ISuite, ITest } from './types';
+import { ISuite, ITest, IParsedTestFile } from './types';
 
 function findFilesRecursively(dir: string, pattern: RegExp): string[] {
   let results: string[] = [];
@@ -352,15 +352,38 @@ export function generateSingleDoc(workingDir: string = process.cwd()): void {
     markdown += `\n\n\n\nConsolidated information separated by test\n\n\n`;
     markdown += detailedTestReport();
 
+    // Parse all files once and calculate total individual tests
+    const parsedFiles: IParsedTestFile[] = testFiles.map(filePath => parseCypressTestFile(filePath));
+    
+    let totalIndividualTests = 0;
+    parsedFiles.forEach((parsed: IParsedTestFile) => {
+      if (parsed.contexts && parsed.contexts.length > 0) {
+        parsed.contexts.forEach((context: any) => {
+          totalIndividualTests += context.tests.length;
+        });
+      } else {
+        totalIndividualTests += parsed.its.length;
+      }
+    });
+
     markdown += `## Summary\n\n`;
     markdown += `- Total Test Files: **${testFiles.length}**\n`;
-    markdown += `- Cypress Files (.cy): **${groupedFiles.cypress.length}**\n`;
-    markdown += `- Spec Files (.spec): **${groupedFiles.spec.length}**\n`;
-    markdown += `- Test Files (.test): **${groupedFiles.test.length}**\n\n`;
+    markdown += `- Total Individual Tests: **${totalIndividualTests}**\n`;
+    
+    // Show only file types with non-zero count
+    if (groupedFiles.cypress.length > 0) {
+      markdown += `- Cypress Files (.cy): **${groupedFiles.cypress.length}**\n`;
+    }
+    if (groupedFiles.spec.length > 0) {
+      markdown += `- Spec Files (.spec): **${groupedFiles.spec.length}**\n`;
+    }
+    if (groupedFiles.test.length > 0) {
+      markdown += `- Test Files (.test): **${groupedFiles.test.length}**\n`;
+    }
+    markdown += `\n`;
     markdown += `---\n\n`;
 
-    testFiles.forEach(filePath => {
-      const result = parseCypressTestFile(filePath);
+    parsedFiles.forEach((result: IParsedTestFile) => {
 
       markdown += `## File: **${result.fileName}**\n\n`;
       markdown += `**Path:** ${result.filePath}\n\n`;
@@ -379,10 +402,10 @@ export function generateSingleDoc(workingDir: string = process.cwd()): void {
 
       // Handle multiple contexts
       if (result.contexts && result.contexts.length > 0) {
-        result.contexts.forEach(context => {
+        result.contexts.forEach((context: any) => {
           markdown += `### Context: **${context.name}**\n\n`;
           markdown += `#### Tests\n`;
-          context.tests.forEach(test => {
+          context.tests.forEach((test: any) => {
             markdown += `- ${test}\n`;
           });
           markdown += `\n`;
@@ -390,7 +413,7 @@ export function generateSingleDoc(workingDir: string = process.cwd()): void {
       } else if (result.its && result.its.length > 0) {
         // Fallback for files without contexts
         markdown += `#### Tests\n`;
-        result.its.forEach(it => {
+        result.its.forEach((it: any) => {
           markdown += `- ${it}\n`;
         });
         markdown += `\n`;
@@ -411,7 +434,7 @@ export function generateSingleDoc(workingDir: string = process.cwd()): void {
     const outputPath = path.join(workingDir, 'spec-docs.md');
     fs.writeFileSync(outputPath, markdown);
     console.log('✅ spec-docs.md generated successfully!');
-    console.log(`Found ${testFiles.length} test files (${groupedFiles.cypress.length} .cy files, ${groupedFiles.spec.length} .spec files, ${groupedFiles.test.length} .test files).`);
+    console.log(`Found ${testFiles.length} test files with ${totalIndividualTests} individual tests (${groupedFiles.cypress.length} .cy files, ${groupedFiles.spec.length} .spec files, ${groupedFiles.test.length} .test files).`);
   } finally {
     // Restore original working directory
     process.chdir(originalCwd);
