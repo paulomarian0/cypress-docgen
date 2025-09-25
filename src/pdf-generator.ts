@@ -42,7 +42,7 @@ function generateTestDocumentationHTML(testFiles: string[], projectName: string)
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cypress Test Documentation - ${projectName}</title>
+    <title>Test Documentation</title>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -111,7 +111,7 @@ function generateTestDocumentationHTML(testFiles: string[], projectName: string)
     </style>
 </head>
 <body>
-    <h1>Cypress Test Documentation - ${projectName}</h1>
+    <h1>Test Documentation</h1>
 `;
 
   // Group files by their main describe block or directory structure
