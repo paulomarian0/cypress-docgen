@@ -6,7 +6,9 @@
     "types": "dist/index.d.ts",
     "bin": {
         "cypress-docgen": "dist/cli.js",
-        "cypress-docgen-folder": "dist/cli-folder.js"
+        "cypress-docgen-folder": "dist/cli-folder.js",
+        "cypress-docgen-pdf": "dist/pdf-cli.js",
+        "cypress-docgen-pdf-folder": "dist/pdf-cli-folder.js"
     },
     "files": [
         "dist",
@@ -18,7 +20,9 @@
         "prepublishOnly": "npm run build",
         "start": "node dist/cli.js",
         "generate:doc": "npm run build && npm run start",
-        "generate:doc:folder": "npm run build && node dist/cli-folder.js"
+        "generate:doc:folder": "npm run build && node dist/cli-folder.js",
+        "generate:pdf": "npm run build && node dist/pdf-cli.js",
+        "generate:pdf:folder": "npm run build && node dist/pdf-cli-folder.js"
     },
     "keywords": [
         "cypress",
@@ -45,5 +49,8 @@
         "@types/node": "^22.14.1",
         "typescript": "^5.3.3"
     },
-    "dependencies": {}
+    "dependencies": {
+        "@types/puppeteer": "^5.4.7",
+        "puppeteer": "^24.22.3"
+    }
 }

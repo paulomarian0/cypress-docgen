@@ -468,4 +468,5 @@ export function generateSingleDoc(workingDir: string = process.cwd()): void {
 
 // Export other utilities that might be useful
 export { parseCypressTestFile } from './parser';
+export { generateSinglePDF, generateFolderPDFs } from './pdf-generator';
 export * from './types';

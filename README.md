@@ -64,6 +64,8 @@ Then run:
 ```bash
 npm run docs
 npm run docs:folder
+npm run generate:pdf
+npm run generate:pdf:folder
 ```
 
 Or use npx to run directly:
@@ -71,6 +73,8 @@ Or use npx to run directly:
 ```bash
 npx cypress-docgen
 npx cypress-docgen-folder
+npx cypress-docgen-pdf
+npx cypress-docgen-pdf-folder
 ```
 
 ### Programmatic Usage
@@ -78,15 +82,23 @@ npx cypress-docgen-folder
 You can also use cypress-docgen programmatically in your Node.js scripts:
 
 ```javascript
-const { generateSingleDoc, generateFolderDocs } = require('cypress-docgen');
+const { generateSingleDoc, generateFolderDocs, generateSinglePDF, generateFolderPDFs } = require('cypress-docgen');
 
-// Generate single documentation file
+// Generate single documentation file (Markdown)
 generateSingleDoc(); // Uses current directory
 generateSingleDoc('/path/to/your/project'); // Specify custom directory
 
-// Generate documentation files per directory
+// Generate documentation files per directory (Markdown)
 generateFolderDocs(); // Uses current directory
 generateFolderDocs('/path/to/your/project'); // Specify custom directory
+
+// Generate single PDF documentation
+generateSinglePDF(); // Uses current directory
+generateSinglePDF('/path/to/your/project'); // Specify custom directory
+
+// Generate PDF documentation files per directory
+generateFolderPDFs(); // Uses current directory
+generateFolderPDFs('/path/to/your/project'); // Specify custom directory
 ```
 
 ## Output
@@ -118,6 +130,22 @@ When using `cypress-docgen-folder`, the tool creates separate Markdown files for
 - Each file is named after the directory path (with path separators replaced by hyphens)
 - Each file contains only the tests from that specific directory
 - The format of each file is similar to the single documentation file
+
+### PDF Documentation
+
+When using the PDF generation commands (`cypress-docgen-pdf` or `cypress-docgen-pdf-folder`), the tool creates professional PDF documents:
+
+#### Single PDF Documentation
+- Generates a single `spec-docs.pdf` file
+- Professional styling with organized sections
+- Clean layout optimized for sharing with stakeholders
+- Groups tests by context or directory structure
+
+#### Directory-Based PDF Documentation
+- Creates separate PDF files for each directory containing tests
+- Files are stored in a `spec-docs-pdf` directory
+- Professional formatting suitable for reports and presentations
+- Each PDF contains only the tests from that specific directory
 
 ## Metadata Support
 
