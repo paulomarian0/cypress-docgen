@@ -147,45 +147,46 @@ function detailedTestReport(): string {
 
   const padId = (num: number) => `CT${num.toString().padStart(3, '0')}`;
 
-  // Scroll through all reports
   for (const reportsPath of reportDirs) {
     const allReports = getJsonMochawesome(reportsPath);
 
-    allReports.forEach(report => {
-      report.results.forEach(result => {
-        const traverseSuites = (suites: ISuite[]) => {
-          suites.forEach(suite => {
-            const category = suite.title || 'Sem Categoria';
-            suite.tests.forEach(test => {
-              testList.push({
-                id: padId(testCounter++),
-                category,
-                title: test.title,
-                status: test.state,
-                duration: test.duration
-              });
-            });
-
-            // Recursive for sub-suites
-            if (suite.suites && suite.suites.length > 0) {
-              traverseSuites(suite.suites);
-            }
-          });
-        };
-
-        traverseSuites(result.suites);
+    allReports.forEach((report) => {
+      report.results.forEach((result) => {
+        traverseAndCollect(result.suites, testList);
       });
     });
   }
 
+  function traverseAndCollect(suites: ISuite[], list: TestDetails[]) {
+    suites.forEach((suite) => {
+      suite.tests.forEach((test) => {
+        const testDetail: TestDetails = {
+          id: padId(testCounter),
+          category: suite.title,
+          title: test.title,
+          status: test.state,
+          duration: test.duration,
+        };
+        list.push(testDetail);
+        testCounter++;
+      });
+
+      // Recursion for nested suites
+      if (suite.suites && suite.suites.length > 0) {
+        traverseAndCollect(suite.suites, list);
+      }
+    });
+  }
+
+  // Generate Markdown
   let markdown = `| ID | Category | Test | Status | % Pass | Duration |\n`;
   markdown += `|----|----------|-------|--------|-----------|---------|\n`;
 
-  testList.forEach(test => {
-    const passPercent = test.status === 'passed' ? '100%' : '0%';
-    const durationFormatted = formatDuration(test.duration);
+  testList.forEach((item) => {
+    const status = item.status === "passed" ? "Passes" : item.status === "failed" ? "Fails" : "Pending";
+    const passPercentage = item.status === "passed" ? "100%" : "0%";
 
-    markdown += `| ${test.id} | ${test.category} | ${test.title} | ${test.status === 'passed' ? 'Passes' : 'Failure'} | ${passPercent} | ${durationFormatted} |\n`;
+    markdown += `| ${item.id} | ${item.category} | ${item.title} | ${status} | ${passPercentage} | ${formatDuration(item.duration)} |\n`;
   });
 
   return markdown;
@@ -266,7 +267,19 @@ export function generateSingleDoc(workingDir: string = process.cwd()): void {
     const filePattern = /\.(cy|spec|test)\.(js|ts)$/;
     const testFiles = findFilesRecursively('.', filePattern);
 
-    let markdown = `# 📄 Execution Report - Cypress Tests\n\n`;
+    // Check if there are any JSON report files available
+    const reportDirs = findReportJsonsDirs('.');
+    let hasReports = false;
+
+    for (const reportsPath of reportDirs) {
+      const allReports = getJsonMochawesome(reportsPath);
+      if (allReports.length > 0) {
+        hasReports = true;
+        break;
+      }
+    }
+
+    let markdown = ``;
 
     const groupedFiles = {
       cypress: testFiles.filter(file => file.includes('.cy.')),
@@ -274,87 +287,91 @@ export function generateSingleDoc(workingDir: string = process.cwd()): void {
       test: testFiles.filter(file => file.includes('.test.'))
     };
 
-    const date = new Date();
+    // Only generate Execution Report section if there are JSON reports available
+    if (hasReports) {
+      markdown += `# 📄 Execution Report - Cypress Tests\n\n`;
 
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0'); // Janeiro é 0
-    const day = String(date.getDate()).padStart(2, '0');
-    
-    const formattedDate = `${year}/${month}/${day}`;
-    
-    const hour = String(date.getHours()).padStart(2, '0');
-    const minutes = String(date.getMinutes()).padStart(2, '0');
-    const seconds = String(date.getSeconds()).padStart(2, '0');
-    
-    const formattedTime = `${hour}:${minutes}:${seconds}`;
-    
-    const dateTime = `${formattedDate} ${formattedTime}`;
+      const date = new Date();
 
-    markdown += `## 1. Project Identification\n\n\n\n`;
-    markdown += `| **Information**        | **Value**               |\n`;
-    markdown += `|------------------------|-------------------------|\n`;
-    markdown += `| **System**             | ${path.basename(workingDir)} |\n`;
-    markdown += `| **Version**            | -                       |\n`;
-    markdown += `| **Execution Date**     | ${dateTime}             |\n`;
-    markdown += `| **Responsible**        | -                       |\n\n`;
-    // markdown += `---\n\n`;
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, '0'); // Janeiro é 0
+      const day = String(date.getDate()).padStart(2, '0');
 
-    markdown += `## 2. Objective\n\n\n`;
-    markdown += `This report presents a detailed analysis of the Cypress test results identified in the project, focusing on file coverage and scenario structure.\n\n\n`;
+      const formattedDate = `${year}/${month}/${day}`;
 
-    const reportDirs = findReportJsonsDirs('.');
+      const hour = String(date.getHours()).padStart(2, '0');
+      const minutes = String(date.getMinutes()).padStart(2, '0');
+      const seconds = String(date.getSeconds()).padStart(2, '0');
 
-    let totalTests = 0;
-    let totalPasses = 0;
-    let totalFailures = 0;
-    let totalDuration = 0;
-    let firstStartDate: Date | null = null;
+      const formattedTime = `${hour}:${minutes}:${seconds}`;
 
-    for (const reportsPath of reportDirs) {
-      const allReports = getJsonMochawesome(reportsPath);
+      const dateTime = `${formattedDate} ${formattedTime}`;
 
-      allReports.forEach((report) => {
-        const stats = report.stats;
+      markdown += `## 1. Project Identification\n\n\n\n`;
+      markdown += `| **Information**        | **Value**               |\n`;
+      markdown += `|------------------------|-------------------------|\n`;
+      markdown += `| **System**             | ${path.basename(workingDir)} |\n`;
+      markdown += `| **Version**            | -                       |\n`;
+      markdown += `| **Execution Date**     | ${dateTime}             |\n`;
+      markdown += `| **Responsible**        | -                       |\n\n`;
 
-        totalTests += stats.tests;
-        totalPasses += stats.passes;
-        totalFailures += stats.failures;
-        totalDuration += stats.duration;
+      // markdown += `---\n\n`;
 
-        // To get the earliest start date
-        const reportStart = new Date(stats.start);
-        if (!firstStartDate || reportStart < firstStartDate) {
-          firstStartDate = reportStart;
-        }
-      });
+      markdown += `## 2. Objective\n\n\n`;
+      markdown += `This report presents a detailed analysis of the Cypress test results identified in the project, focusing on file coverage and scenario structure.\n\n\n`;
+
+      let totalTests = 0;
+      let totalPasses = 0;
+      let totalFailures = 0;
+      let totalDuration = 0;
+      let firstStartDate: Date | null = null;
+
+      for (const reportsPath of reportDirs) {
+        const allReports = getJsonMochawesome(reportsPath);
+
+        allReports.forEach((report) => {
+          const stats = report.stats;
+
+          totalTests += stats.tests;
+          totalPasses += stats.passes;
+          totalFailures += stats.failures;
+          totalDuration += stats.duration;
+
+          // To get the earliest start date
+          const reportStart = new Date(stats.start);
+          if (!firstStartDate || reportStart < firstStartDate) {
+            firstStartDate = reportStart;
+          }
+        });
+      }
+
+      const successRate = totalTests > 0 ? ((totalPasses / totalTests) * 100).toFixed(2) : '0.00';
+      const failureRate = totalTests > 0 ? ((totalFailures / totalTests) * 100).toFixed(2) : '0.00';
+
+      const totalDurationFormatted = formatDuration(totalDuration);
+
+      markdown += `## 3. General Metrics\n\n\n`;
+      markdown += `Test summary\n\n\n`;
+
+      markdown += `| **METRIC**                     | **VALUE**           |\n`;
+      markdown += `|--------------------------------|---------------------|\n`;
+      markdown += `| **Total Tests Executed**       | ${totalTests}       |\n`;
+      markdown += `| **Total Passed Tests**         | ${totalPasses} (${successRate}%) |\n`;
+      markdown += `| **Total Failed Tests**         | ${totalFailures} (${failureRate}%) |\n`;
+      markdown += `| **Total Execution Time**       | ${totalDurationFormatted} |\n`;
+      // markdown += `---\n\n`;
+
+      markdown += `## 4. Breakdown by File\n\n\n\n`;
+      markdown += `Summary of the analysis divided by categories - Analysis by Test:\n\n\n`;
+      markdown += categoryTest();
+
+      markdown += `\n\n\n\nConsolidated information separated by test\n\n\n`;
+      markdown += detailedTestReport();
     }
-
-    const successRate = totalTests > 0 ? ((totalPasses / totalTests) * 100).toFixed(2) : '0.00';
-    const failureRate = totalTests > 0 ? ((totalFailures / totalTests) * 100).toFixed(2) : '0.00';
-
-    const totalDurationFormatted = formatDuration(totalDuration);
-
-    markdown += `## 3. General Metrics\n\n\n`;
-    markdown += `Test summary\n\n\n`;
-
-    markdown += `| **METRIC**                     | **VALUE**           |\n`;
-    markdown += `|--------------------------------|---------------------|\n`;
-    markdown += `| **Total Tests Executed**       | ${totalTests}       |\n`;
-    markdown += `| **Total Passed Tests**         | ${totalPasses} (${successRate}%) |\n`;
-    markdown += `| **Total Failed Tests**         | ${totalFailures} (${failureRate}%) |\n`;
-    markdown += `| **Total Execution Time**       | ${totalDurationFormatted} |\n`;
-    // markdown += `---\n\n`;
-
-    markdown += `## 4. Breakdown by File\n\n\n\n`;
-    markdown += `Summary of the analysis divided by categories - Analysis by Test:\n\n\n`;
-    markdown += categoryTest();
-
-    markdown += `\n\n\n\nConsolidated information separated by test\n\n\n`;
-    markdown += detailedTestReport();
 
     // Parse all files once and calculate total individual tests
     const parsedFiles: IParsedTestFile[] = testFiles.map(filePath => parseCypressTestFile(filePath));
-    
+
     let totalIndividualTests = 0;
     parsedFiles.forEach((parsed: IParsedTestFile) => {
       if (parsed.contexts && parsed.contexts.length > 0) {
@@ -366,10 +383,15 @@ export function generateSingleDoc(workingDir: string = process.cwd()): void {
       }
     });
 
+    // Start with Summary section (either as first section or after Execution Report)
+    if (!hasReports) {
+      markdown += `# 📄 Test Documentation\n\n`;
+    }
+
     markdown += `## Summary\n\n`;
     markdown += `- Total Test Files: **${testFiles.length}**\n`;
     markdown += `- Total Individual Tests: **${totalIndividualTests}**\n`;
-    
+
     // Show only file types with non-zero count
     if (groupedFiles.cypress.length > 0) {
       markdown += `- Cypress Files (.cy): **${groupedFiles.cypress.length}**\n`;
@@ -422,14 +444,17 @@ export function generateSingleDoc(workingDir: string = process.cwd()): void {
       // markdown += `---\n\n`;
     });
 
-    markdown += errorReportMarkdown();
+    // Only include error report if there are JSON reports available
+    if (hasReports) {
+      markdown += errorReportMarkdown();
 
-    markdown += `## 6. Conclusions and Recommendations\n`;
-    markdown += `- Prioritize fixing critical functionalities that failed during test execution.\n`;
-    markdown += `- Investigate and fix recurring errors in table generation or filters identified in multiple test cases.\n`;
-    markdown += `- Perform performance analysis on functionalities that showed longer execution times or slowness.\n`;
-    markdown += `- Strengthen automated test coverage in areas with a history of failures to reduce future regressions.\n`;
-    markdown += `- Establish a routine for reviewing and monitoring test results to identify trends and prevent recurring issues.\n`;
+      markdown += `## 6. Conclusions and Recommendations\n`;
+      markdown += `- Prioritize fixing critical functionalities that failed during test execution.\n`;
+      markdown += `- Investigate and fix recurring errors in table generation or filters identified in multiple test cases.\n`;
+      markdown += `- Perform performance analysis on functionalities that showed longer execution times or slowness.\n`;
+      markdown += `- Strengthen automated test coverage in areas with a history of failures to reduce future regressions.\n`;
+      markdown += `- Establish a routine for reviewing and monitoring test results to identify trends and prevent recurring issues.\n`;
+    }
 
     const outputPath = path.join(workingDir, 'spec-docs.md');
     fs.writeFileSync(outputPath, markdown);
