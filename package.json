@@ -43,7 +43,7 @@
         "url": "https://github.com/paulomarian0/cypress-docgen/issues"
     },
     "engines": {
-        "node": ">=14.0.0"
+        "node": ">=20.0.0"
     },
     "devDependencies": {
         "@types/node": "^22.14.1",
