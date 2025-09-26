@@ -15,7 +15,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.PAT_TOKEN }}
     
       - name: Set up Node.js
         uses: actions/setup-node@v3
@@ -48,7 +48,6 @@ jobs:
         run: |
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
-          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/paulomarian0/cypress-docgen.git
           git add package.json
           git commit -m "Increment version to ${{ steps.increment_version.outputs.new_version }}"
           git push origin main
