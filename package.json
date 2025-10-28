@@ -1,6 +1,6 @@
 {
   "name": "cypress-docgen",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A tool designed to automatically generate documentation from Cypress tests",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
