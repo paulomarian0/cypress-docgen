@@ -35,13 +35,14 @@ export function parseCypressTestFile(filePath: string): IParsedTestFile {
 
   // Find all test blocks with their positions
   const tests: TestPosition[] = [];
-  const itRegex = /it\s*\(\s*['"`](.*?)['"`]/g;
+  // Match 'it(' at the beginning of a line or after whitespace/punctuation, but not after a dot (to avoid cy.visit, wait, etc)
+  const itRegex = /(?:^|[^.\w])(it)\s*\(\s*['"`](.*?)['"`]/gm;
   let itMatch;
 
   console.log(`File: ${fileName} - Scanning for tests and contexts`);
 
   while ((itMatch = itRegex.exec(content)) !== null) {
-    const title = itMatch[1].trim();
+    const title = itMatch[2].trim();
     
     // Filter out invalid titles
     if (!title.startsWith('/') &&
